@@ -5,7 +5,7 @@ import { Card, CardContent, Typography, Button } from '@mui/material';
 
 
 
-const JobCard = ({ job, charactersLimit }) => {
+const JobCard = ({ job, charactersLimit,index }) => {
     const [expanded, setExpanded] = useState(false);
     const toggle = () => {
         setExpanded(prev => !prev)
@@ -15,8 +15,8 @@ const JobCard = ({ job, charactersLimit }) => {
             <CardContent>
                 <div className='css-1ewacfc'> <Typography sx={{ fontSize: "9px", fontWeight: 400 }}>⏳ Posted 10 hours ago</Typography>
                 </div>
-                <Typography variant="h6" >{job.jobRole}</Typography>
-                <Typography sx={{fontSize:"11px"}} gutterBottom>{job.location}</Typography>
+                <Typography variant="h6" >{index+1}.{job.jobRole.charAt(0).toUpperCase()+job.jobRole.substring(1)}</Typography>
+                <Typography sx={{fontSize:"11px"}} gutterBottom>{job.location.charAt(0).toUpperCase()+job.location.substring(1)}</Typography>
                 <Typography sx={{fontSize:"1rem"}} gutterBottom>About Company:</Typography>
                 <Typography variant="body2" color="textSecondary" paragraph>
                     {expanded ? job.jobDetailsFromCompany : `${job.jobDetailsFromCompany.slice(0, charactersLimit)}...`}

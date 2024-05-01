@@ -4,8 +4,6 @@ const initialState = {
     jobs: [],
     loading: false,
     error: null,
-    visibleJobs: [],
-    startIndex: 0
 };
 const jobReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -17,12 +15,6 @@ const jobReducer = (state = initialState, action) => {
         }
         case actionTypes.FETCH_JOBS_FAILURE: {
             return { ...state, loading: false, jobs: [], error: action.payload }
-        }
-        case actionTypes.SET_VISIBLE_JOBS: {
-            return { ...state, visibleJobs: action.payload };
-        }
-        case actionTypes.SET_START_INDEX: {
-            return { ...state, startIndex: action.payload };
         }
         default:
             return state;

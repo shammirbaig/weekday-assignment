@@ -23,13 +23,3 @@ export const fetchJobs = (limit, offset) => async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_JOBS_FAILURE, payload: error.message });
   }
 };
-
-export const setVisibleJobs = (visibleJobs) => ({
-  type: actionTypes.SET_VISIBLE_JOBS,
-  payload: visibleJobs
-});
-
-export const setStartIndex = (startIndex) => ({
-  type: actionTypes.SET_START_INDEX,
-  payload: startIndex
-});

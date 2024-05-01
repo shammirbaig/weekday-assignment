@@ -1,146 +1,91 @@
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Grid } from '@mui/material';
 import JobCard from './Components/Jobcard';
+import Loader from './Components/Loader';
+import { fetchJobs } from './Actions/jobActions';
 import { spacing } from '@mui/system';
-
-//dummy data of each job card
-const jsonData = `[{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-},
-{
-  "jdUid": "cfff359f-053c-11ef-83d3-06301d0a7178-92008",
-  "jdLink": "https://weekday.works",
-  "jobDetailsFromCompany": "This is a sample job and you must have displayed it to understand that its not just some random lorem ipsum text but something which was manually written. Oh well, if random text is what you were looking for then here it is: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and now in this assignment.",
-  "maxJdSalary": null,
-  "minJdSalary": null,
-  "salaryCurrencyCode": null,
-  "location": "chennai",
-  "minExp": null,
-  "maxExp": null,
-  "jobRole": "tech lead"
-}
-]`;
-const jsObject = JSON.parse(jsonData);
-
 function App() {
+  const dispatch = useDispatch();
+
+
+  //code using event listener
+
+  // useEffect(() => {
+  //   dispatch(fetchJobs(10, 0)); // Fetch initial jobs when component mounts
+  // }, [dispatch]);
+
+  // const handleScroll = () => {
+  //   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  //   const bottomScrollPosition = scrollTop + clientHeight;
+  //   const scrollThreshold = scrollHeight - 250; 
+
+  //   if (bottomScrollPosition >= scrollThreshold) {
+  //     loadMoreJobs();
+  //   }
+  // };
+
+  // const loadMoreJobs = useCallback(() => {
+  //   if (!loading) {
+  //     dispatch(fetchJobs(10, jobs.length)); // Fetch more jobs when scrolled to bottom
+  //   }
+  // }, [dispatch, loading, jobs.length]);
+
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, [handleScroll]);
+
+  const { loading, jobs, error } = useSelector(state => state.jobs);
+  const intersectionObserverRef = useRef();
+  const lastRef = useRef()
+
+  const handleIntersection = useCallback((entries) => {
+    entries.forEach(entry => {
+      console.log(jobs.length)
+      if (entry.isIntersecting && !loading) {
+        dispatch(fetchJobs(10, jobs.length));
+      }
+    });
+  }, [jobs.length, loading, dispatch]);
+
+  useEffect(() => {
+    // Initialize Intersection Observer when component mounts
+    intersectionObserverRef.current = new IntersectionObserver(
+      handleIntersection,
+      { threshold: 0.01 }
+    );
+
+    // Start observing the last element
+    intersectionObserverRef.current.observe(lastRef.current);
+
+    return () => {
+      // Cleanup Intersection Observer when component unmounts
+      intersectionObserverRef.current.disconnect();
+    };
+  }, [handleIntersection]);
+
+
+
+
   return (
     <div className="App">
       <Container>
         <Typography sx={{ mt: 2 }} variant="h4" align="center" gutterBottom>Job Listings</Typography>
         <Grid container spacing={4}>
           {/*Filters to be added */}
-          {jsObject.map((job, index) => {
+          {jobs.map((job, index) => {
             return (
               <Grid key={index} item xs={12} md={4}>
-                <JobCard job={job} charactersLimit={100} />
+                <JobCard index={index} job={job} charactersLimit={100} />
               </Grid>
             )
           })}
         </Grid>
+        <div style={{ height: "30px" }} ref={lastRef}></div>
+        {loading && <Loader />}
       </Container>
 
     </div>
