@@ -31,6 +31,6 @@ The API accepts `limit` and `offset` as request body parameters and returns a li
 - **Virtualization:** To further improve performance, consider implementing methods like virtualization to render only the necessary elements in the DOM.
 
 ## Live Demo
-The live hosted website can be accessed [here](https://6633905848ae560a305b724f--weekday-sde1-shammir.netlify.app/).
+The live hosted website can be accessed which is hosted on netlify [here](https://6633905848ae560a305b724f--weekday-sde1-shammir.netlify.app/).
 
 Note: use Node version 20.5.0 for not running into any issues.
