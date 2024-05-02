@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# Frontend Interview Assignment: Candidate Application Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This project is a candidate application platform that allows users to view job listings, filter jobs based on various criteria, and implement infinite scroll for a seamless browsing experience. The platform provides a user-friendly interface for viewing and applying to jobs.
 
-## Available Scripts
+## Features
+- **Job Cards:** Each job listing is displayed as a card containing essential information such as job title, company name, location, job description (with an option to expand), experience required, and an apply button/link.
+- **Filters:** Users can refine job listings based on various criteria, including minimum experience, company name, location, remote/on-site, tech stack, role, and minimum base pay.
+- **Infinite Scroll:** Infinite scroll is implemented to load additional job listings automatically as the user scrolls down the page.
+- **Responsive Design:** The platform is responsive and works well on different screen sizes, including mobile devices.
 
-In the project directory, you can run:
+## Technology Stack
+- ReactJs
+- Redux
+- CSS
+- Material UI
 
-### `npm start`
+## Installation
+To run the application locally, follow these steps:
+1. Clone this repository.
+2. Install dependencies using `npm install`.
+3. Run the application using `npm start`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## API Integration
+The application fetches job listings from the following API endpoint:
+https://api.weekday.technology/adhoc/getSampleJdJSON
+The API accepts `limit` and `offset` as request body parameters and returns a list of jobs along with the total count of jobs present.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Performance Optimization
+- **Intersection Observer:** Intersection observer is used instead of the regular event listener for performance optimization.
+- **Virtualization:** To further improve performance, consider implementing methods like virtualization to render only the necessary elements in the DOM.
 
-### `npm test`
+## Live Demo
+The live hosted website can be accessed [here](https://6633905848ae560a305b724f--weekday-sde1-shammir.netlify.app/).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Note: use Node version 20.5.0 for not running into any issues.
