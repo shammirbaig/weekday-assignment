@@ -1,7 +1,7 @@
 # Frontend Interview Assignment: Candidate Application Platform
 
 ## Overview
-This project is a candidate application platform that allows users to view job listings, filter jobs based on various criteria, and implement infinite scroll for a seamless browsing experience. The platform provides a user-friendly interface for viewing and applying to jobs.
+This project is a candidate application platform that allows users to view job listings, filter jobs based on various criteria, and implement infinite scroll for a seamless experience. It provides a user-friendly interface for viewing and applying to jobs.
 
 ## Features
 - **Job Cards:** Each job listing is displayed as a card containing essential information such as job title, company name, location, job description (with an option to expand), experience required, and an apply button/link.
