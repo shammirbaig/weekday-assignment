@@ -20,3 +20,25 @@ body {
   border-radius: 10px;
   border: 1px solid rgb(230, 230, 230);
 }
+.easy-apply-button {
+  background-color: #67F0C5 !important;
+  width: 100%;
+  color: black;
+  font-weight: 500;
+  margin-bottom: 10px !important;
+  transition: opacity 0.3s; /* Add transition for smooth effect */
+}
+
+.referral-button {
+  background-color: #4E5CDB !important;
+  width: 100%;
+  color: white;
+  font-weight: 500;
+  transition: opacity 0.3s; /* Add transition for smooth effect */
+}
+
+/* Decrease opacity on hover */
+.easy-apply-button:hover,
+.referral-button:hover {
+  opacity: 0.8; /* Adjust the opacity value as needed */
+}

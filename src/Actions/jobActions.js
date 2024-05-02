@@ -17,9 +17,15 @@ export const fetchJobs = (limit, offset) => async (dispatch) => {
 
     const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", requestOptions);
     const data = await response.json();
-    console.log(data);
     dispatch({ type: actionTypes.FETCH_JOBS_SUCCESS, payload: data.jdList });
   } catch (error) {
     dispatch({ type: actionTypes.FETCH_JOBS_FAILURE, payload: error.message });
   }
+};
+export const setFilter = (filters) => async (dispatch) => {
+  dispatch({ type: actionTypes.SET_FILTER_LOADING });
+  dispatch({
+    type: actionTypes.SET_FILTER_SUCCESS,
+    payload: filters,
+  }) ;
 };

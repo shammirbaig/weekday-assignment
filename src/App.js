@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Container, Grid } from '@mui/material';
 import JobCard from './Components/Jobcard';
 import Loader from './Components/Loader';
+import Filters from './Components/Filters';
 import { fetchJobs } from './Actions/jobActions';
 import { spacing } from '@mui/system';
 function App() {
@@ -38,7 +39,7 @@ function App() {
   //   };
   // }, [handleScroll]);
 
-  const { loading, jobs, error } = useSelector(state => state.jobs);
+  const { loading, jobs, filteredJobs, error } = useSelector(state => state.jobs);
   const intersectionObserverRef = useRef();
   const lastRef = useRef()
 
@@ -49,7 +50,7 @@ function App() {
         dispatch(fetchJobs(10, jobs.length));
       }
     });
-  }, [jobs.length, loading, dispatch]);
+  },[jobs.length, loading,dispatch]);
 
   useEffect(() => {
     // Initialize Intersection Observer when component mounts
@@ -65,7 +66,7 @@ function App() {
       // Cleanup Intersection Observer when component unmounts
       intersectionObserverRef.current.disconnect();
     };
-  }, [handleIntersection]);
+  }, [ handleIntersection]);
 
 
 
@@ -74,15 +75,13 @@ function App() {
     <div className="App">
       <Container>
         <Typography sx={{ mt: 2 }} variant="h4" align="center" gutterBottom>Job Listings</Typography>
+        <Filters />
         <Grid container spacing={4}>
-          {/*Filters to be added */}
-          {jobs.map((job, index) => {
-            return (
-              <Grid key={index} item xs={12} md={4}>
-                <JobCard index={index} job={job} charactersLimit={100} />
-              </Grid>
-            )
-          })}
+          {(filteredJobs.length > 0 ? filteredJobs : jobs).map((job, index) => (
+            <Grid key={job.jdUid} item xs={12} md={4}>
+              <JobCard index={index} job={job} charactersLimit={100} />
+            </Grid>
+          ))}
         </Grid>
         <div style={{ height: "30px" }} ref={lastRef}></div>
         {loading && <Loader />}
